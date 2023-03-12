@@ -1,14 +1,6 @@
-import { styled } from '..';
+import { styled } from '../../styles';
 
-export const Container = styled('div', {
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'flex-start',
-	justifyContent: 'center',
-	minHeight: '100vh',
-});
-
-export const Header = styled('header', {
+export const HeaderContainer = styled('header', {
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
@@ -17,21 +9,6 @@ export const Header = styled('header', {
 	width: '100%',
 	maxWidth: 1180,
 	margin: '0 auto',
-});
-
-export const ButtonCheckOut = styled('button', {
-	color: '$gray300',
-	backgroundColor: '$gray800',
-
-	width: '48px',
-	height: '48px',
-
-	border: 'none',
-	outline: 'none',
-
-	borderRadius: '6px',
-
-	cursor: 'pointer',
 });
 
 export const BadgeContainer = styled('div', {
@@ -62,4 +39,19 @@ export const BadgeContainer = styled('div', {
 	'.noti_count': {
 		fontWeight: 700,
 	},
+});
+
+export const ButtonCheckOut = styled('button', {
+	color: '$gray300',
+	backgroundColor: '$gray800',
+
+	width: '48px',
+	height: '48px',
+
+	border: 'none',
+	outline: 'none',
+
+	borderRadius: '6px',
+
+	cursor: 'pointer',
 });

@@ -61,4 +61,30 @@ export const Product = styled('div', {
 			opacity: 1,
 		},
 	},
+
+	'.InfoProductGroup': {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: '0.5rem',
+	},
+
+	'footer strong': {
+		fontSize: '$md',
+	},
+});
+
+export const IconContainer = styled('span', {
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+
+	width: 56,
+	height: 56,
+	borderRadius: 6,
+
+	background: '$green500',
+
+	svg: {
+		color: '$gray100',
+	},
 });

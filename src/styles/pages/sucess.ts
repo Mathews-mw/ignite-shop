@@ -1,4 +1,5 @@
 import { styled } from '..';
+import * as Collapsible from '@radix-ui/react-collapsible';
 
 export const SucessContainer = styled('main', {
 	display: 'flex',
@@ -36,13 +37,21 @@ export const SucessContainer = styled('main', {
 	},
 });
 
-export const ImageContainer = styled('div', {
+export const ImagesGroup = styled('div', {
+	display: 'grid',
+	gridTemplateColumns: 'repeat(auto-fit, 85px)',
 	width: '100%',
-	maxWidth: 130,
-	height: 145,
+	justifyContent: 'center',
+	alignItems: 'center',
+});
+
+export const ImageContainer = styled('div', {
+	width: 140,
+	maxWidth: 140,
+	height: 140,
 	background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
-	borderRadius: 8,
-	padding: '0.25rem',
+	boxShadow: '0px 0px 60px rgba(0, 0, 0, 0.8)',
+	borderRadius: '100%',
 	marginTop: '4rem',
 
 	display: 'flex',
@@ -52,4 +61,51 @@ export const ImageContainer = styled('div', {
 	img: {
 		objectFit: 'cover',
 	},
+});
+
+export const CollapsibleRoot = styled(Collapsible.Root, {
+	minWidth: 300,
+});
+
+export const CollapsibleContent = styled(Collapsible.Content, {
+	display: 'flex',
+	flexDirection: 'column',
+});
+
+export const IconButton = styled('button', {
+	all: 'unset',
+	fontFamily: 'inherit',
+	borderRadius: '100%',
+	height: 25,
+	width: 25,
+	display: 'inline-flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	color: 'white',
+	'&[data-state="closed"]': { backgroundColor: '$green500' },
+	'&[data-state="open"]': { backgroundColor: '$green300' },
+	'&:hover': { backgroundColor: '$green300' },
+	'&:focus': { boxShadow: `0 0 0 2px #7465d4` },
+});
+
+export const Flex = styled('div', { display: 'flex' });
+
+export const Title = styled('span', {
+	color: '$gray300',
+	fontSize: 18,
+	fontWeight: 'bold',
+	lineHeight: '25px',
+});
+
+export const Text = styled('span', {
+	color: '$gray300',
+	fontSize: 15,
+	lineHeight: '25px',
+});
+
+export const ContentContainer = styled('div', {
+	backgroundColor: '$gray800',
+	borderRadius: 4,
+	margin: '10px 0',
+	padding: 10,
 });

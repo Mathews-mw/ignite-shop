@@ -3,9 +3,11 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Stripe from 'stripe';
+import { OrderContext } from '../../context/OrderContext';
 import { stripe } from '../../lib/stripe';
+import { v4 as uuidv4 } from 'uuid';
 import { ImageContainer, ProductContainer, ProductDetails } from '../../styles/pages/product';
 
 interface ProductsProps {
@@ -13,7 +15,8 @@ interface ProductsProps {
 		id: string;
 		name: string;
 		imageUrl: string;
-		price: string;
+		price: number;
+		priceFormatted: string;
 		description: string;
 		defaultPriceId: string;
 	};
@@ -21,10 +24,18 @@ interface ProductsProps {
 
 export default function Product({ product }: ProductsProps) {
 	const { isFallback } = useRouter();
+	const { addNewOrder } = useContext(OrderContext);
+
 	const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
 
 	if (isFallback) {
 		return <p>loading...</p>;
+	}
+
+	function addToWishList(productData: ProductsProps) {
+		const { defaultPriceId, id, name, price, priceFormatted, description, imageUrl } = productData.product;
+
+		addNewOrder({ itemWishListId: uuidv4(), defaultPriceId, id, name, price, priceFormatted, description, imageUrl });
 	}
 
 	async function handleBuyProduct() {
@@ -58,13 +69,11 @@ export default function Product({ product }: ProductsProps) {
 
 				<ProductDetails>
 					<h1>{product.name}</h1>
-					<span>{product.price}</span>
+					<span>{product.priceFormatted}</span>
 
 					<p>{product.description}</p>
 
-					<button disabled={isCreatingCheckoutSession} onClick={() => handleBuyProduct()}>
-						Comprar agora
-					</button>
+					<button onClick={() => addToWishList({ product })}>Colocar na sacola</button>
 				</ProductDetails>
 			</ProductContainer>
 		</>
@@ -103,10 +112,11 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
 				id: product.id,
 				name: product.name,
 				imageUrl: product.images[0],
-				price: new Intl.NumberFormat('pt-BR', {
+				price: price.unit_amount,
+				priceFormatted: new Intl.NumberFormat('pt-BR', {
 					style: 'currency',
 					currency: 'BRL',
-					//@ts-ignore
+					// @ts-ignore
 				}).format(price.unit_amount / 100),
 				description: product.description,
 				defaultPriceId: price.id,
